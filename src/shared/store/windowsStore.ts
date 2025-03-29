@@ -8,8 +8,13 @@ type WindowBoxReference = {
   id: string
   title: string
   view: {
+    dragElement: HTMLDivElement | null
     type: AppView
     props: Record<string, unknown>
+    delta: {
+      x: number
+      y: number
+    }
   }
   active: boolean
   collapsed: boolean
@@ -25,14 +30,21 @@ export const useWindowsStore = defineStore('windowBoxesStore', () => {
       id: uuid(),
       title: title,
       view: {
+        dragElement: null,
         type,
         props,
+        delta: {
+          x: 0,
+          y: 0,
+        },
       },
       active: true,
       collapsed: false,
       expanded: false,
     })
   }
+
+  const findWindowBoxById = (id: string) => windowBoxes.value.find((wb) => wb.id === id)
 
   const closeWindowBox = (id: string) => {
     const idx = windowBoxes.value.findIndex((wb) => wb.id === id)
@@ -47,10 +59,26 @@ export const useWindowsStore = defineStore('windowBoxesStore', () => {
     })
   }
 
+  const changeWindowBoxDelta = (id: string, coords: { x: number; y: number }) => {
+    const windowBox = findWindowBoxById(id)
+    if (!windowBox) return
+    windowBox.view.delta.x = coords.x
+    windowBox.view.delta.y = coords.y
+  }
+
+  const setWindowBoxDragElement = (id: string, element: HTMLDivElement) => {
+    const windowBox = findWindowBoxById(id)
+    if (!windowBox) return
+    windowBox.view.dragElement = element
+  }
+
   return {
     windowBoxes,
+    findWindowBoxById,
+    setWindowBoxDragElement,
     addWindowBox,
     closeWindowBox,
     activateWindowBox,
+    changeWindowBoxDelta,
   }
 })

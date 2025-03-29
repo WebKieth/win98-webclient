@@ -4,7 +4,11 @@ import launchIcon from '@/assets/launch.png'
 import Divider from '@/shared/ui/Divider/Divider.vue'
 import InsetBox from '@/shared/ui/InsetBox/InsetBox.vue'
 import { useClock } from '@/shared/hooks/useClock'
+import { useWindowsStore } from '@/shared/store/windowsStore'
+import { storeToRefs } from 'pinia'
 const { time } = useClock()
+const windowsStore = useWindowsStore()
+const { windowBoxes } = storeToRefs(windowsStore)
 </script>
 <template>
   <div class="w-full bg-[#C0C0C0] border-t border-white p-[1px] flex gap-[3px] justify-between">
@@ -14,6 +18,9 @@ const { time } = useClock()
         Start
       </Button>
       <Divider />
+      <Button v-for="wBox in windowBoxes" :key="wBox.id" :inset="wBox.active">
+        {{ wBox.title }}
+      </Button>
     </div>
     <div class="flex gap-[3px]">
       <Divider />

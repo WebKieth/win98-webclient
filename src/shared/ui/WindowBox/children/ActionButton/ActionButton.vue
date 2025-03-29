@@ -1,8 +1,9 @@
 <script lang="ts" setup>
+import Button from '@/shared/ui/Button/Button.vue'
 import { actionButton } from './ActionButton.css'
 </script>
 <template>
-  <button :class="actionButton">
+  <Button :class="actionButton">
     <slot />
-  </button>
+  </Button>
 </template>

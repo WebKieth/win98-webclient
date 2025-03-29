@@ -1,6 +1,8 @@
 # win98space
 
-This template should help get you started developing with Vue 3 in Vite.
+Just for fun Windows 98 UI as web client for remote data storage  
+Written on Vue 3 + Pinia + Tanstack/query  
+Special thanks for [this guy](https://www.figma.com/@gustaluz)
 
 ## Recommended IDE Setup
 

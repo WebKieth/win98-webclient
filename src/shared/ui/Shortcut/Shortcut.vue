@@ -9,7 +9,7 @@ const emit = defineEmits<{
 </script>
 <template>
   <div
-    class="inline-flex flex-col items-center gap-2 cursor-pointer"
+    class="inline-flex p-1 flex-col items-center gap-2 cursor-pointer"
     @dblclick="(e) => emit('dblclick', e)"
   >
     <img class="w-[48px]" :src="icon" alt="" />
