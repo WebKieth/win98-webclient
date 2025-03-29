@@ -1,0 +1,21 @@
+@import 'tailwindcss';
+@font-face {
+  font-family: 'MS Sans serif';
+  src:
+    local('MS Sans serif'),
+    local('MS Sans serif'),
+    url('/fonts/MS-sans-serif.ttf') format('truetype');
+  font-weight: normal;
+}
+@font-face {
+  font-family: 'MS Sans serif';
+  src:
+    local('MS Sans serif'),
+    local('MS Sans serif'),
+    url('/fonts/MS-sans-serif-bold.ttf') format('truetype');
+  font-weight: bold;
+}
+
+html {
+  font-family: 'MS Sans serif', sans-serif;
+}
