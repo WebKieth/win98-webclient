@@ -15,16 +15,17 @@ const currentWindowBox = computed(() => windowBoxes.value.find((wb) => wb.id ===
 const windowPositionDelta = computed(() => currentWindowBox.value?.view.delta || { x: 0, y: 0 })
 provide('windowBoxDelta', windowPositionDelta)
 watch(boxPanelElement, () => {
-  console.log('watch drag element')
   if (!boxPanelElement.value) return
   windowsStore.setWindowBoxDragElement(id, boxPanelElement.value)
 })
 </script>
 <template>
   <WindowBox
+    :style="{ zIndex: currentWindowBox?.view.zIndex }"
     :focused="currentWindowBox?.active"
     @mounted="(panelEl) => (boxPanelElement = panelEl)"
     @close="() => windowsStore.closeWindowBox(id)"
+    @mousedown="() => windowsStore.activateWindowBox(id)"
   >
     <template #title>{{ title }}</template>
     <slot />

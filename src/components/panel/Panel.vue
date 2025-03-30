@@ -18,7 +18,12 @@ const { windowBoxes } = storeToRefs(windowsStore)
         Start
       </Button>
       <Divider />
-      <Button v-for="wBox in windowBoxes" :key="wBox.id" :inset="wBox.active">
+      <Button
+        v-for="wBox in windowBoxes"
+        :key="wBox.id"
+        :inset="wBox.active"
+        @click="() => windowsStore.activateWindowBox(wBox.id)"
+      >
         {{ wBox.title }}
       </Button>
     </div>

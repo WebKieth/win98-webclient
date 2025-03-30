@@ -8,6 +8,7 @@ type WindowBoxReference = {
   id: string
   title: string
   view: {
+    zIndex: number
     dragElement: HTMLDivElement | null
     type: AppView
     props: Record<string, unknown>
@@ -30,6 +31,7 @@ export const useWindowsStore = defineStore('windowBoxesStore', () => {
       id: uuid(),
       title: title,
       view: {
+        zIndex: windowBoxes.value.length,
         dragElement: null,
         type,
         props,
@@ -53,10 +55,13 @@ export const useWindowsStore = defineStore('windowBoxesStore', () => {
   }
 
   const activateWindowBox = (id: string) => {
-    windowBoxes.value.forEach((wb) => {
-      if (wb.id !== id) wb.active = false
-      else wb.active = true
-    })
+    const currentActiveWindowBox = windowBoxes.value.find((wb) => wb.active)
+    const newActiveWindowBox = windowBoxes.value.find((wb) => wb.id === id)
+    if (!currentActiveWindowBox || !newActiveWindowBox) return
+    currentActiveWindowBox.view.zIndex = newActiveWindowBox.view.zIndex
+    currentActiveWindowBox.active = false
+    newActiveWindowBox.view.zIndex = windowBoxes.value.length - 1
+    newActiveWindowBox.active = true
   }
 
   const changeWindowBoxDelta = (id: string, coords: { x: number; y: number }) => {

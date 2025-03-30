@@ -5,13 +5,15 @@ import { windowBox, windowPanelBoxVariants } from './WindowBox.css'
 import Expand from '@/shared/icons/Expand.vue'
 import Cross from '@/shared/icons/Cross.vue'
 import { useDesktopRoots } from '@/components/desktop/useDesktopRoots'
-import { computed, inject, onMounted, ref, watch } from 'vue'
-const { focused = true } = defineProps<{
+import { computed, inject, onMounted, ref, watch, type CSSProperties } from 'vue'
+const { focused = true, style = {} } = defineProps<{
+  style?: CSSProperties
   focused?: boolean
 }>()
 const emit = defineEmits<{
   (eventName: 'close'): void
   (eventName: 'mounted', panelEl: HTMLDivElement): void
+  (eventName: 'mousedown'): void
 }>()
 const desktop = useDesktopRoots()
 const windowBoxElement = ref<HTMLDivElement | null>(null)
@@ -54,7 +56,8 @@ onMounted(() => {
   <div
     ref="windowBoxElement"
     :class="[windowBox, 'absolute inline-flex w-fit flex-col']"
-    :style="{ transform: `translate(${coords.x}px, ${coords.y}px)` }"
+    :style="{ transform: `translate(${coords.x}px, ${coords.y}px)`, ...style }"
+    @mousedown="() => emit('mousedown')"
   >
     <div class="p-[1px]">
       <div
